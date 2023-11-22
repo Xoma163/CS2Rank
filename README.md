@@ -6,6 +6,7 @@
 
 1) Windows 10
 2) Python3
+3) Steam app with cs2 on account
 
 ### QUICK START
 1) Get steam_key for API [here](https://steamcommunity.com/dev/apikey)
