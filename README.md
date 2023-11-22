@@ -28,3 +28,8 @@
 
 ### Known bugs
 1) If a player quits the game, the script cannot understand whether he won or lost.
+
+
+### FAQ
+- Q: get_last_game_code return 412 status code
+- A: Idk why this happened, but I provide fresh share_code and this works for me

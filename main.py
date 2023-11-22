@@ -12,6 +12,15 @@ from src.utils.users import Users
 TMP_PATH = 'tmp'
 
 
+# clear tmp dir. delete this code if you need .dem files
+def clear_tmp():
+    files = glob.glob(TMP_PATH + '/*')
+    for f in files:
+        if f == '.gitkeep':
+            continue
+        os.remove(f)
+
+
 def main():
     uc = Users()
 
@@ -33,13 +42,7 @@ def main():
     finally:
         # save latest share codes
         uc.write()
-
-        # clear tmp dir. delete this code if you need .dem files
-        files = glob.glob(TMP_PATH + '/*')
-        for f in files:
-            if f == '.gitkeep':
-                continue
-            os.remove(f)
+        clear_tmp()
 
 
 if __name__ == "__main__":

@@ -13,6 +13,8 @@ def do(file, match_id, outcome_id, token_id):
             shell=True
         )
     except Exception as e:
+        if e.args[0] == 4:
+            raise RuntimeError("Close CS2 app")
         if e.args[0] == 6:
             raise RuntimeError("Start steam app")
         raise

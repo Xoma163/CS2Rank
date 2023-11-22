@@ -15,7 +15,9 @@ class SteamAPI:
         }
         while code != "n/a":
             params['knowncode'] = code
-            data = requests.get(self.SHARE_CODE_URL, params=params)
-            code = data.json()['result']['nextcode']
+            r = requests.get(self.SHARE_CODE_URL, params=params)
+            r.raise_for_status()
+            code = r.json()['result']['nextcode']
+
         code = params['knowncode']
         return code
