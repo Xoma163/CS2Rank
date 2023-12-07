@@ -3,3 +3,4 @@ users.json
 .idea
 .idea/*
 tmp/*
+venv/*

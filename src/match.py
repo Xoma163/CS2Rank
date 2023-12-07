@@ -113,15 +113,25 @@ class Match:
         r = re.compile(self.DEM_URL_RE)
         dem_archive_url = r.findall(content)[0]
 
-        data = requests.get(dem_archive_url).content
+        r = requests.get(dem_archive_url)
+        try:
+            r.raise_for_status()
+        except requests.exceptions.HTTPError:
+            raise RuntimeError(f"problem with getting dem archive {dem_archive_url}. Probably steam server error")
+
         with open(self.dem_archive_file_path, 'wb') as file:
-            file.write(data)
+            file.write(r.content)
 
         chunk_size = 100 * 1024
         with open(self.dem_file_path, 'wb') as out_file:
             with BZ2File(self.dem_archive_file_path, "r") as bz2_file:
-                for data in iter(lambda: bz2_file.read(chunk_size), b""):
-                    out_file.write(data)
+                try:
+                    for data in iter(lambda: bz2_file.read(chunk_size), b""):
+                        out_file.write(data)
+                except OSError:
+                    print(f"problem with unzipping {self.dem_archive_file_path}")
+                    os.remove(self.dem_file_path)
+                    raise
 
     def get_rank_after_game(self, steam_id):
         parser = DemoParser(os.path.abspath(self.dem_file_path))

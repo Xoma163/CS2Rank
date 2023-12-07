@@ -30,7 +30,8 @@ def main():
     try:
         for user in cs2_users:
             user.set_rank()
-            ranks.append(user.rank)
+            if user.rank:
+                ranks.append(user.rank)
 
             uc.set_code(user.steam_id, user.last_match.share_code)
 
@@ -42,7 +43,7 @@ def main():
     finally:
         # save latest share codes
         uc.write()
-        clear_tmp()
+        # clear_tmp()
 
 
 if __name__ == "__main__":
